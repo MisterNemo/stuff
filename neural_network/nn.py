@@ -122,7 +122,10 @@ class NeuralNetwork(object):
             nabla_b[-l] = delta
             nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
         return (nabla_b, nabla_w)
-
+    
+    def evaluate(self, data):
+        results = [(np.argmax(self.feedforward(x)), y) for (x, y) in data]
+        return sum(int(x == y) for (x, y) in results)
 
     def accuracy(self, data, convert=False):
         if convert:
